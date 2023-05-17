@@ -33,12 +33,25 @@ Login
                     <div class="card-body ">
                         
                         <form action="<?=base_url(route_to('signin')) ?>" method="POST">
-                            
+                        
+                        <?= csrf_field(); ?>
+
+                        <?php if(!empty(session()->getFlashdata('fail'))) : ?>
+                            <div class="alert alert-danger">
+                                <?= session()->getFlashdata('fail'); ?>
+                            </div>
+                        <?php endif;?>
+                        
                             <div class="form-group">
 
                                 <label for="email" class="form-label">Correo Electronico</label>
-                                <input type="email" id="email" placeholder="ejemplo@email.com" class="form-control" name="email" value="<?php echo set_value('email')?>" >
-                                <p><?=session('errors.usuario')?></p>
+                                <input type="email" id="email" placeholder="ejemplo@email.com" class="form-control" name="email" value="<?=set_value('email'); ?>">
+                                <!-- ERRORES DE VALIDACION DEL CONTROLADOR -->
+                                <span class="text-danger">
+                                    <!-- Al parecer VALIDATION es palabra reservada, cambiandole, no mostrar error -->
+                                    <?=isset($validation) ? mostrar_error($validation, 'email') : " " ?>
+                                </span>
+                                
 
                             </div>
 
@@ -46,7 +59,11 @@ Login
 
                                 <label for="password">Contraseña</label>
                                 <input type="text" class="form-control mb-3" name="password">
-                                <p><?=session('errors.password')?></p>
+                                <!-- ERRORES DE VALIDACION DEL CONTROLADOR -->
+                                <span class="text-danger">
+                                    <!-- Al parecer VALIDATION es palabra reservada, cambiandole, no mostrar error -->
+                                    <?=isset($validation) ? mostrar_error($validation, 'password') : " " ?>
+                                </span>
 
                             </div>
 
@@ -56,20 +73,6 @@ Login
 
                             </div>
 
-                            <!-- Lista de Errores -->
-                            <?php if (isset($validation)): ?>
-                            <div class="row">
-                                
-                                <div class="col">
-
-                                    <div class='alert alert-danger mt-2'>
-                                        <?= $validation->listErrors() ?>
-                                    </div>
-                                
-                                </div>
-                            
-                            </div>
-                            <?php endif; ?>
 
                         </form>
                         

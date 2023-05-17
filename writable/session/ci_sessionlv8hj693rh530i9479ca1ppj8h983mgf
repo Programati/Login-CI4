@@ -1,0 +1,1 @@
+__ci_last_regenerate|i:1684343761;_ci_previous_url|s:33:"http://localhost/login/index.php/";fail|s:22:"Contraseña incorrecta";__ci_vars|a:2:{s:4:"fail";s:3:"old";s:13:"_ci_old_input";s:3:"old";}_ci_old_input|a:2:{s:3:"get";a:0:{}s:4:"post";a:3:{s:14:"csrf_test_name";s:32:"ad9230a33bac2292c552b765947272f6";s:5:"email";s:24:"altermatimar03@gmail.com";s:8:"password";s:3:"123";}}

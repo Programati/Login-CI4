@@ -1,13 +1,13 @@
 <?php
     //Aqui programararemos los SCRIP la vizualizacion de errores de cada campo del formulario de Registro
-    function mostrar_errores($validaciones, $campo)
+    function mostrar_error($validacion, $campo)
     {
-        if($validaciones->hashError($campo))
+        if($validacion->hasError($campo))
         {
-            return $validaciones->getError($campo); 
+            return $validacion->getError($campo); 
         }else
         {
             return false;
         }
     }
-
+?>

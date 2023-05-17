@@ -34,14 +34,18 @@ $routes->set404Override();
 //INICIO
 $routes->get('/', 'AuthController::index', ['as' => 'inicio']);
 
-//FORMULARIOS INICIO - REGISTRO
-$routes->get('login', 'AuthController::index', ['as' => 'signin']);
-$routes->get('registrarse', 'AuthController::formRegistro', ['as' => 'formularioRegistro']);
+//FORMULARIOS INICIO... No lleva al formulario, verifica
+$routes->match(['get','post'],'/', 'AuthController::index', ['as' => 'inicio']);
+
+//$routes->match(['get','post'],'login', 'AuthController::check', ['as' => 'signin']);
+//FORMULARIOS REGISTRO
+$routes->match(['get','post'],'registrarse', 'AuthController::formRegistro', ['as' => 'formularioRegistro']);
 
 
 
 //Al enviar Formulario Registro nos redirege aqui
-$routes->post('/guardado', 'AuthController::guardarRegistro', ['as' => 'save']);
+$routes->post('/guardado', 'AuthController::guardarRegistro', ['as' => 'guardar']);
+$routes->post('/login', 'AuthController::check', ['as' => 'signin']);
 /*
  * --------------------------------------------------------------------
  * Additional Routing
@@ -59,5 +63,4 @@ if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
 
-//$routes->match(['get','post'],'registrarse', 'Autenticacion\RegistrarseController::store', ['as' => 'formularioRegistro']);
 //$routes->match(['get','post'],'login', 'Autenticacion\LoginController::entrar', ['as' => 'signin']);
