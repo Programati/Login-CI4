@@ -32,16 +32,14 @@ $routes->set404Override();
 //$routes->get('/', 'Home::index');
 
 //INICIO
-$routes->match(['get','post'],'/', 'HomeController::index', ['as' => 'inicio']);
+$routes->get('/', 'HomeController::index', ['as' => 'inicio']);
 
 
-//FORMULARIOS LOGIN
-$routes->match(['get','post'],'login', 'AuthController::formularioLogin', ['as' => 'login']);
+
 //FORMULARIO LOGIN pero primero destruimos sesion
 $routes->get('logout', 'AuthController::salir', ['as' => 'logout']);
 
-//FORMULARIOS REGISTRO
-$routes->match(['get','post'],'registrarse', 'AuthController::formularioRegistro', ['as' => 'formularioRegistro']);
+
 
 
 
@@ -53,6 +51,22 @@ $routes->post('/guardado', 'AuthController::guardarRegistro', ['as' => 'guardar'
 //Controlador->funcion donde verificamos la identidad del usuario desde el LOGIN
 $routes->post('signin', 'AuthController::check', ['as' => 'controlUsuario']);
 
+//Para proteger RUTAS tenemos que ponerlas dentro de un grupo y aplicar el filtro programado
+$routes->group('',['filter'=>'VerificarAutenticacion'], function($routes)
+{
+    //Agregamos todas las rutas que querramos proteger con el filtro
+    $routes->match(['get','post'],'lista', 'HomeController::verUsuarios', ['as' => 'verUsuarios']);
+
+});
+$routes->group('',['filter'=>'UsuarioYaLogueado'], function($routes)
+{
+    //Agregamos todas las rutas que querramos proteger con el filtro
+    //FORMULARIOS LOGIN
+    $routes->match(['get','post'],'login', 'AuthController::formularioLogin', ['as' => 'login']);
+    //FORMULARIOS REGISTRO
+    $routes->match(['get','post'],'registrarse', 'AuthController::formularioRegistro', ['as' => 'formularioRegistro']);
+
+});
 
 
 
@@ -72,5 +86,3 @@ $routes->post('signin', 'AuthController::check', ['as' => 'controlUsuario']);
 if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
-
-//$routes->match(['get','post'],'login', 'Autenticacion\LoginController::entrar', ['as' => 'signin']);

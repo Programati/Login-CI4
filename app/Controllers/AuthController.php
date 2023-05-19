@@ -121,7 +121,11 @@ class AuthController extends BaseController
                 
             }else //De lo contrario que muetre un mensaje EXITOSO
             {
-                return redirect()->back()->with('success', 'Formulario cargado correctamente! Ahora te encuentras registrado');
+                //Ultimo ID, Es el ID del usuario registrado
+                $ultimo_id = $tablaUsuariosModelo->insertID();
+                //Insertamos el ID del usuario registrado y lo seteamos en la sesion
+                session()->set('loggedUser', $ultimo_id);
+                return redirect()->to(route_to('verUsuarios'))->with('success', 'Formulario cargado correctamente! Ahora te encuentras registrado');
             }
 
         }
@@ -180,7 +184,7 @@ class AuthController extends BaseController
             {
                 $id_usuario_logueado = $informacion_usuario_logueado['id'];
                 session()->set('loggedUser', $id_usuario_logueado);
-                return redirect()->to('/');
+                return redirect()->to('lista');
 
             }
         }
