@@ -32,12 +32,12 @@ $routes->set404Override();
 //$routes->get('/', 'Home::index');
 
 //INICIO
-
 $routes->match(['get','post'],'/', 'HomeController::index', ['as' => 'inicio']);
 
 
 //FORMULARIOS LOGIN
 $routes->match(['get','post'],'login', 'AuthController::formularioLogin', ['as' => 'login']);
+//FORMULARIO LOGIN pero primero destruimos sesion
 $routes->get('logout', 'AuthController::salir', ['as' => 'logout']);
 
 //FORMULARIOS REGISTRO
