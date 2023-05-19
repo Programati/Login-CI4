@@ -32,7 +32,8 @@ Login
 
                     <div class="card-body ">
                         
-                        <form action="<?=base_url(route_to('signin')) ?>" method="POST">
+                        <!-- Enviamos a la funcion check del controller -->
+                        <form action="<?=base_url(route_to('controlUsuario')) ?>" method="POST">
                         
                         <?= csrf_field(); ?>
 
@@ -58,7 +59,7 @@ Login
                             <div class="form-group">
 
                                 <label for="password">Contraseña</label>
-                                <input type="text" class="form-control mb-3" name="password">
+                                <input type="password" class="form-control mb-3" name="password">
                                 <!-- ERRORES DE VALIDACION DEL CONTROLADOR -->
                                 <span class="text-danger">
                                     <!-- Al parecer VALIDATION es palabra reservada, cambiandole, no mostrar error -->

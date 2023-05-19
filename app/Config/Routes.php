@@ -32,20 +32,30 @@ $routes->set404Override();
 //$routes->get('/', 'Home::index');
 
 //INICIO
-$routes->get('/', 'AuthController::index', ['as' => 'inicio']);
 
-//FORMULARIOS INICIO... No lleva al formulario, verifica
-$routes->match(['get','post'],'/', 'AuthController::index', ['as' => 'inicio']);
+$routes->match(['get','post'],'/', 'HomeController::index', ['as' => 'inicio']);
 
-//$routes->match(['get','post'],'login', 'AuthController::check', ['as' => 'signin']);
+
+//FORMULARIOS LOGIN
+$routes->match(['get','post'],'login', 'AuthController::formularioLogin', ['as' => 'login']);
+$routes->get('logout', 'AuthController::salir', ['as' => 'logout']);
+
 //FORMULARIOS REGISTRO
-$routes->match(['get','post'],'registrarse', 'AuthController::formRegistro', ['as' => 'formularioRegistro']);
+$routes->match(['get','post'],'registrarse', 'AuthController::formularioRegistro', ['as' => 'formularioRegistro']);
 
 
 
 //Al enviar Formulario Registro nos redirege aqui
+//Controllador->funcion donde guardamos los datos
 $routes->post('/guardado', 'AuthController::guardarRegistro', ['as' => 'guardar']);
-$routes->post('/login', 'AuthController::check', ['as' => 'signin']);
+
+//El Formulario de Logueo nos trae aqui y de aca vamos para la funcion CHECK
+//Controlador->funcion donde verificamos la identidad del usuario desde el LOGIN
+$routes->post('signin', 'AuthController::check', ['as' => 'controlUsuario']);
+
+
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

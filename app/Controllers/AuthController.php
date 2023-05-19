@@ -15,18 +15,21 @@ class AuthController extends BaseController
         helper(['url','form','FormularioError']);
     }
 
-    public function index()
+    //PANTALLA DE LOGUEO
+    public function formularioLogin()
     {
         $data = [];
         return view('Auth/login', $data);
     }
 
-    public function formRegistro()
+    //PANTALLA DE FORMULARIO PARA REGISTRAR USUARIOS
+    public function formularioRegistro()
     {
         $data = [];
         return view('Auth/registrarse', $data);
     }
 
+    //GUARDAR DATOS DEL FORMULARIO DE REGISTRO DE USUARIOS
     public function guardarRegistro()
     {
         //Validaremos los inputs del POST recibido por Formulario Registro
@@ -124,6 +127,7 @@ class AuthController extends BaseController
         }
     }
 
+    //VERIFICACION DE USUARIO AL INICIAR SESION
     public function check()
     {
         //Comenzamos por validar los campos
@@ -149,27 +153,52 @@ class AuthController extends BaseController
 
         if(!$validacion)
         {
-            return view('Auth/login', ['validation'=>$this->validator]);
+            //Si hay algun dato incorrecto, mostramos el error debajo de cada campo del login
+            return view('Auth\login', ['validation'=>$this->validator]);
         }else
         {
-            //Verificaremos el usuario, obteniendo su EMAIL y PASSWORD
+            //Verificaremos el usuario
+
+            //Primero obtenemos su EMAIL y PASSWORD
             $email = $this->request->getpost('email');
             $password = $this->request->getpost('password');
 
             $tablaUsuariosModelo = new UsuarioModel();
             //Ponemos en una variable al usuario que obtenemos en una busqueda en la BD
-            $informacion_usuario_login = $tablaUsuariosModelo->where('email', $email)->first();
+            $informacion_usuario_logueado = $tablaUsuariosModelo->where('email', $email)->first();
             //Usamos la funcion para verificar el password del POST contra el que tenemos en la BD asociada al Correo
-            $check_password = Hash::check($password, $informacion_usuario_login['password']);
+            $check_password = Hash::check($password, $informacion_usuario_logueado['password']);
 
-            if(!$check_password)
+            if(!$check_password)//Si hay un error de logueo
             {
-                session()->setFlashdata('fail', 'Contraseña incorrectaaaaa');
-                return redirect()->to('/')->withInput();
+                //En una sesion flash, mandamos un error
+                session()->setFlashdata('fail', 'Contraseña incorrecta');
+                //Y nos redirigimos a la pantalla de logueo
+                return redirect()->to('login')->withInput();
+            }
+            else//Si el usuario se loguea correctamente almacenamos su identificacion en la sesion
+            {
+                $id_usuario_logueado = $informacion_usuario_logueado['id'];
+                session()->set('loggedUser', $id_usuario_logueado);
+                return redirect()->to('/');
+
             }
         }
 
 
+    }
+
+    //SALIR DE LA SESION
+    function salir()
+    {
+        //Si hemos registrado una sesion
+        if(session()->has('loggedUser'))
+        {
+            //Removemos la sesion
+            session()->remove('loggedUser');
+            //Redirigimos a la pantalla de logueo
+            return redirect()->to('login')->with('fail', 'Cerraste sesion');
+        }
     }
 
 }

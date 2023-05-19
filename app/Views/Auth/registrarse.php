@@ -12,9 +12,7 @@ Registrarse
 
     <div class="container my-5">
         <div class="row d-flex justify-content-center">
-            <div class="col-8 g-5">
-
-                
+            <div class="col-8 g-5">                
                 
                 <div class="card ">
                     <h5 class="card-header d-flex justify-content-center align-items-center">
@@ -84,7 +82,7 @@ Registrarse
 
                                 <div class="form-group col-12 col-md-6 mb-3">
                                     <label for="password" class="form-label">Contraseña</label>
-                                    <input type="text" id="password" class="form-control" name="password">
+                                    <input type="password" id="password" class="form-control" name="password">
                                     <!-- ERRORES DE VALIDACION DEL CONTROLADOR -->
                                     <span class="text-danger">
                                         <!-- Al parecer VALIDATION es palabra reservada, cambiandole, no mostrar error -->
@@ -94,7 +92,7 @@ Registrarse
                                 
                                 <div class="form-group col-12 col-md-6 mb-3">
                                     <label for="password_confirm" class="form-label">Confirmar contraseña</label>
-                                    <input type="text" id="password_confirm" class="form-control" name="password_confirm" >
+                                    <input type="password" id="password_confirm" class="form-control" name="password_confirm" >
                                     <!-- ERRORES DE VALIDACION DEL CONTROLADOR -->
                                     <span class="text-danger">
                                         <!-- Al parecer VALIDATION es palabra reservada, cambiandole, no mostrar error -->
@@ -130,7 +128,7 @@ Registrarse
                     </div>
 
                     <div class="card-footer text-body-secondary d-flex justify-content-between">
-                        <a href="<?=base_url(route_to('signin')) ?>" class=""><small>Ya tienes cuenta? Entrar ahora</small></a>
+                        <a href="<?=base_url(route_to('login')) ?>" class=""><small>Ya tienes cuenta? Entrar ahora</small></a>
                     </div>
                 </div>
 
