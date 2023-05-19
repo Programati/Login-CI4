@@ -8,7 +8,7 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" href="<?=base_url(route_to('/')) ?>">
-            <i class="bi bi-emoji-sunglasses"></i>
+            HOME
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -16,6 +16,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
             <?php if(!session()->has('loggedUser')):?>
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="<?=base_url(route_to('login')) ?>">Ingresar</a>
@@ -24,13 +25,17 @@
                     <a class="nav-link" href="<?=base_url(route_to('formularioRegistro')) ?>">Registrarse</a>
                 </li>
             <?php else:?>
-                <li class="nav-item d-flex align-items-center">
-                    <?="Hola ".$infoUsuarioLog['apellido']." ".$infoUsuarioLog['nombre'];?>
+                <li class="nav-item d-flex align-items-center fw-bold">
+                    <?="Hola ".$infoUsuarioLog['nombre'];?>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url(route_to('verUsuarios')); ?>">Lista de usuarios</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url(route_to('logout')); ?>">Salir</a>
                 </li>
             <?php endif;?>
+            
         </ul>
         
         </div>

@@ -26,8 +26,6 @@ class HomeController extends BaseController
 
 
         $data = [
-            //
-            'titulo' => 'Dashboard',
             //Registro del usuario logueado
             'infoUsuarioLog' => $info_usuario,
         ];
@@ -49,8 +47,6 @@ class HomeController extends BaseController
         $info_tabla_usuarios = $datosUsuarios->findAll();
 
         $data = [
-            //
-            'titulo' => 'Dashboard',
             //Registro del usuario logueado
             'infoUsuarioLog' => $info_usuario,
             'infoUsuariosReg' => $info_tabla_usuarios
